@@ -1,0 +1,40 @@
+{
+  "name": "tulahack2023",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "deploy": "scp -r ./dist tulahack2023:/root/client",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.12.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@tcaty/eslint-config": "1.0.4",
+    "@tcaty/prettier-config": "1.0.3",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "@vitejs/plugin-react": "^4.0.0-beta.0",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "prettier": "^2.6.2",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.0",
+    "vite-plugin-pwa": "^0.14.7"
+  }
+}
