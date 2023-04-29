@@ -13,9 +13,7 @@ export const MainLayout: React.FC = () => {
       <Container
         maxWidth="xs"
         sx={{
-          height: '100vh',
           bgcolor: palette.common.white,
-          borderRadius: 2,
           p: '0 !important',
         }}
       >
@@ -39,9 +37,7 @@ export const MainLayout: React.FC = () => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Box sx={{ height: '92vh' }}>
-          <Outlet />
-        </Box>
+        <Outlet />
       </Container>
     </Box>
   )

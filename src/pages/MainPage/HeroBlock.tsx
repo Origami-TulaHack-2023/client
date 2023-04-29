@@ -19,7 +19,7 @@ export const HeroBlock: React.FC = () => {
   const { palette } = useTheme()
   return (
     <Box
-      sx={{ height: '100%', bgcolor: 'secondary.main', position: 'relative' }}
+      sx={{ height: '92vh', bgcolor: 'secondary.main', position: 'relative' }}
     >
       <Container sx={{ pt: 2 }}>
         <img
