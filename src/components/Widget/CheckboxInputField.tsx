@@ -1,4 +1,4 @@
-import { TextField, FormControlLabel, Checkbox } from '@mui/material'
+import { TextField, FormControlLabel, Checkbox, Stack } from '@mui/material'
 
 interface Props {
   checked: boolean
@@ -16,14 +16,7 @@ export const CheckboxInputField: React.FC<Props> = ({
   marketPlace,
 }) => {
   return (
-    <>
-      <TextField
-        label="Артикул"
-        required
-        value={vendorCode}
-        onChange={handleValueChange}
-        name={marketPlace}
-      />
+    <Stack direction="row" alignItems="center" justifyContent="space-between">
       <FormControlLabel
         control={
           <Checkbox
@@ -34,6 +27,13 @@ export const CheckboxInputField: React.FC<Props> = ({
         }
         label={marketPlace}
       />
-    </>
+      <TextField
+        label="Артикул"
+        required
+        value={vendorCode}
+        onChange={handleValueChange}
+        name={marketPlace}
+      />
+    </Stack>
   )
 }

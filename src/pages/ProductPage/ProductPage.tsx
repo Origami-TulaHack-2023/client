@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Box, useTheme, Container, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
+import { Widget } from '@/components'
 import { products } from '@/data'
 
 export const ProductPage: React.FC = () => {
@@ -42,6 +43,7 @@ export const ProductPage: React.FC = () => {
         </Typography>
         <Typography fontWeight={700}>Описание:</Typography>
         <Typography>{product.description}</Typography>
+        <Widget />
       </Container>
     </Box>
   )

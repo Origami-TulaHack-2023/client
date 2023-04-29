@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import SettingsIcon from '@mui/icons-material/Settings'
 import {
@@ -7,6 +7,7 @@ import {
   IconButton,
   Typography,
   Button,
+  Stack,
 } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
@@ -15,11 +16,17 @@ import { clientEnv } from '@/clientEnv'
 import { CheckboxInputField } from '@/components/Widget/CheckboxInputField'
 import { DialogButton } from '@/components/Widget/DialogButton'
 
-export const Menu: React.FC = () => {
-  const { data, mutate } = useMutation({
+export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
+  const { data, mutateAsync } = useMutation({
     mutationFn: (body: any) =>
       axios.post(`${clientEnv.API_BASE_URL}/network/my_view/`, body),
   })
+
+  useEffect(() => {
+    if (data && (data.data as any)?.length) {
+      setData(data.data)
+    }
+  }, [setData, data])
 
   const [marketPlaces, setMarketPlaces] = useState<any>({
     wildberries: {
@@ -32,7 +39,6 @@ export const Menu: React.FC = () => {
     },
   })
   const { wildberries, ozon } = marketPlaces
-  console.log(data, ozon)
 
   const handleCheckChange = (event: any) => {
     setMarketPlaces({
@@ -62,7 +68,8 @@ export const Menu: React.FC = () => {
       market_place: checkedMarketPlace,
       vendor_code: marketPlaces[checkedMarketPlace].vendorCode,
     }))
-    mutate(body)
+    setIsLoading(true)
+    mutateAsync(body).finally(() => setIsLoading(false))
   }
 
   return (
@@ -70,29 +77,40 @@ export const Menu: React.FC = () => {
       <DialogButton
         renderButton={openDialog => (
           <IconButton onClick={openDialog}>
-            <SettingsIcon />
+            <SettingsIcon fontSize="large" />
           </IconButton>
         )}
         renderContent={closeDialog => (
           <form>
             <DialogContent>
-              <Typography>Настройки</Typography>
-              <CheckboxInputField
-                checked={wildberries.checked}
-                vendorCode={wildberries.vendorCode}
-                handleCheckChange={handleCheckChange}
-                handleValueChange={handleVendorCodeChange}
-                marketPlace="wildberries"
-              />
+              <Typography variant="h5">Настройки</Typography>
+              <Stack gap={2} mt={3}>
+                <CheckboxInputField
+                  checked={wildberries.checked}
+                  vendorCode={wildberries.vendorCode}
+                  handleCheckChange={handleCheckChange}
+                  handleValueChange={handleVendorCodeChange}
+                  marketPlace="wildberries"
+                />
+                <CheckboxInputField
+                  checked={ozon.checked}
+                  vendorCode={ozon.vendorCode}
+                  handleCheckChange={handleCheckChange}
+                  handleValueChange={handleVendorCodeChange}
+                  marketPlace="ozon"
+                />
+              </Stack>
             </DialogContent>
-            <DialogActions>
+            <DialogActions sx={{ mb: 1, mr: 2 }}>
               <Button
+                variant="contained"
+                sx={{ color: 'common.white' }}
                 onClick={() => {
                   handleSubmit()
                   closeDialog()
                 }}
               >
-                Отправить
+                Загрузить
               </Button>
             </DialogActions>
           </form>
