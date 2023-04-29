@@ -10,6 +10,11 @@ import { registerSW } from 'virtual:pwa-register'
 import { App } from '@/App'
 import { theme } from '@/theme'
 
+import '@fontsource/exo/400.css'
+import '@fontsource/exo/500.css'
+import '@fontsource/exo/700.css'
+import '@fontsource/exo/900.css'
+
 if ('serviceWorker' in navigator) {
   registerSW()
 }

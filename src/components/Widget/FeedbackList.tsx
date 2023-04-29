@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 
 import { ReactComponent as OzonLogo } from '@/assets/markets_logos/ozon.svg'
+import { ReactComponent as SportmasterLogo } from '@/assets/markets_logos/sportmaster.svg'
 import { ReactComponent as WbLogo } from '@/assets/markets_logos/wb.svg'
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
 const MAP_MARKET_PLACE_TO_LOGO: any = {
   wildberries: WbLogo,
   ozon: OzonLogo,
+  sportmaster: SportmasterLogo,
 }
 
 export const FeedbackList: React.FC<Props> = ({ feedbacks }) => {
@@ -25,7 +27,8 @@ export const FeedbackList: React.FC<Props> = ({ feedbacks }) => {
   return (
     <Box>
       {feedbacks
-        .slice(0, 20)
+        // .slice(0, 20)
+        .sort((a, b) => b.rating - a.rating)
         .map(({ name, datetime, market_place, rating, text }) => {
           const Logo = MAP_MARKET_PLACE_TO_LOGO[market_place]
           return (

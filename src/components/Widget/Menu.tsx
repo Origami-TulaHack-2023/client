@@ -37,8 +37,12 @@ export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
       vendorCode: '',
       checked: false,
     },
+    sportmaster: {
+      vendorCode: '',
+      checked: false,
+    },
   })
-  const { wildberries, ozon } = marketPlaces
+  const { wildberries, ozon, sportmaster } = marketPlaces
 
   const handleCheckChange = (event: any) => {
     setMarketPlaces({
@@ -98,6 +102,13 @@ export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
                   handleCheckChange={handleCheckChange}
                   handleValueChange={handleVendorCodeChange}
                   marketPlace="ozon"
+                />
+                <CheckboxInputField
+                  checked={sportmaster.checked}
+                  vendorCode={sportmaster.vendorCode}
+                  handleCheckChange={handleCheckChange}
+                  handleValueChange={handleVendorCodeChange}
+                  marketPlace="sportmaster"
                 />
               </Stack>
             </DialogContent>
