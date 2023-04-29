@@ -1,5 +1,11 @@
 import { Widget } from '@/components'
+import { HeroBlock } from '@/pages/MainPage/HeroBlock'
 
 export const MainPage: React.FC = () => {
-  return <Widget />
+  return (
+    <>
+      <HeroBlock />
+      <Widget />
+    </>
+  )
 }

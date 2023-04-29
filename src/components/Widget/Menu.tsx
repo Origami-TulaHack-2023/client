@@ -6,16 +6,13 @@ import {
   DialogContent,
   IconButton,
   Typography,
-  TextField,
   Button,
 } from '@mui/material'
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormGroup from '@mui/material/FormGroup'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 
 import { clientEnv } from '@/clientEnv'
+import { CheckboxInputField } from '@/components/Widget/CheckboxInputField'
 import { DialogButton } from '@/components/Widget/DialogButton'
 
 export const Menu: React.FC = () => {
@@ -23,29 +20,48 @@ export const Menu: React.FC = () => {
     mutationFn: (body: any) =>
       axios.post(`${clientEnv.API_BASE_URL}/network/my_view/`, body),
   })
-  console.log(data)
 
-  const [vendorCode, setVendorCode] = useState('')
   const [marketPlaces, setMarketPlaces] = useState<any>({
-    wildberries: false,
-    ozon: false,
+    wildberries: {
+      vendorCode: '',
+      checked: false,
+    },
+    ozon: {
+      vendorCode: '',
+      checked: false,
+    },
   })
   const { wildberries, ozon } = marketPlaces
+  console.log(data, ozon)
 
-  const handleChange = (event: any) => {
+  const handleCheckChange = (event: any) => {
     setMarketPlaces({
       ...marketPlaces,
-      [event.target.name]: event.target.checked,
+      [event.target.name]: {
+        ...marketPlaces[event.target.name],
+        checked: event.target.checked,
+      },
+    })
+  }
+
+  const handleVendorCodeChange = (event: any) => {
+    setMarketPlaces({
+      ...marketPlaces,
+      [event.target.name]: {
+        ...marketPlaces[event.target.name],
+        vendorCode: event.target.value,
+      },
     })
   }
 
   const handleSubmit = () => {
-    const body = {
-      vendor_code: vendorCode,
-      market_places: Object.keys(marketPlaces).filter(
-        k => marketPlaces[k] === true,
-      ),
-    }
+    const checkedMarketPlaces = Object.keys(marketPlaces).filter(
+      k => marketPlaces[k].checked,
+    )
+    const body = checkedMarketPlaces.map((checkedMarketPlace: any) => ({
+      market_place: checkedMarketPlace,
+      vendor_code: marketPlaces[checkedMarketPlace].vendorCode,
+    }))
     mutate(body)
   }
 
@@ -61,35 +77,13 @@ export const Menu: React.FC = () => {
           <form>
             <DialogContent>
               <Typography>Настройки</Typography>
-              <TextField
-                label="Артикул"
-                required
-                value={vendorCode}
-                onChange={e => setVendorCode(e.target.value)}
+              <CheckboxInputField
+                checked={wildberries.checked}
+                vendorCode={wildberries.vendorCode}
+                handleCheckChange={handleCheckChange}
+                handleValueChange={handleVendorCodeChange}
+                marketPlace="wildberries"
               />
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={wildberries}
-                      onChange={handleChange}
-                      name="wildberries"
-                    />
-                  }
-                  label="Wildberries"
-                />
-                <FormControlLabel
-                  required
-                  control={
-                    <Checkbox
-                      checked={ozon}
-                      onChange={handleChange}
-                      name="ozon"
-                    />
-                  }
-                  label="Ozon"
-                />
-              </FormGroup>
             </DialogContent>
             <DialogActions>
               <Button
