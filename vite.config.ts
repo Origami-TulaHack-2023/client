@@ -25,8 +25,8 @@ export default defineConfig({
         type: 'module',
       },
       manifest: {
-        name: 'Origami',
-        short_name: 'Origami',
+        name: 'Kicks Kindom',
+        short_name: 'KK',
         lang: 'ru',
         start_url: '/',
         scope: '/',
