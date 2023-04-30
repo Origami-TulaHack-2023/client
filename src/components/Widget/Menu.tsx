@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
-import SettingsIcon from '@mui/icons-material/Settings'
 import {
   DialogActions,
   DialogContent,
@@ -11,16 +11,27 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
+import Accordion from '@mui/material/Accordion'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import AccordionSummary from '@mui/material/AccordionSummary'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 
 import { clientEnv } from '@/clientEnv'
 import { DialogButton } from '@/components/Widget/DialogButton'
 
-export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
+export const Menu: React.FC<any> = ({ setData, setIsLoading, setIsError }) => {
   const { data, mutateAsync } = useMutation({
     mutationFn: (body: any) =>
       axios.post(`${clientEnv.API_BASE_URL}/network/my_view/`, body),
+    onError: () => {
+      setIsError(true)
+      setIsLoading(false)
+    },
+    onSuccess: () => {
+      setIsError(false)
+      setIsLoading(false)
+    },
   })
 
   useEffect(() => {
@@ -69,9 +80,32 @@ export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
               <Typography variant="h5" sx={{ mb: 1 }}>
                 Поиск
               </Typography>
-              <Typography>
+              <Typography sx={{ mb: 1 }}>
                 Для поиска отзывов введите артикул данного товара
               </Typography>
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>Примеры артикулов</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography display="block">
+                    wildberries (10 отзывов) 151684835
+                  </Typography>
+                  <Typography display="block">
+                    wildberries (1000 отзывов) 143386618
+                  </Typography>
+                  <Typography display="block">
+                    спортмастер (20 отзывов) 25989760299
+                  </Typography>
+                  <Typography display="block">
+                    спортмастер (800 отзывов) 24087420299
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
               <Stack gap={2.5} mt={3}>
                 <TextField
                   label="Wildberries"

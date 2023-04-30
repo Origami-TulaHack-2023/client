@@ -34,6 +34,7 @@ export const DialogButton = forwardRef<any, DialogButtonProps>(
         {renderButton(openDialog)}
         <Dialog
           open={isDialogOpen}
+          scroll="body"
           onClose={() => {
             onClose && onClose()
             if (closeOnClickOutside) {

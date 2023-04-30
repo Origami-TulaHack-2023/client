@@ -9,12 +9,14 @@ import { AdminModeContext } from '@/contexts'
 
 interface WidgetDataProps {
   isLoading: boolean
+  isError: boolean
   feedbacks: any
   removeFeedback: any
 }
 
 const WidgetData: React.FC<WidgetDataProps> = ({
   isLoading,
+  isError,
   feedbacks,
   removeFeedback,
 }) => {
@@ -23,6 +25,14 @@ const WidgetData: React.FC<WidgetDataProps> = ({
       <Box display="flex" alignItems="center" justifyContent="center">
         <CircularProgress size={40} />
       </Box>
+    )
+  }
+
+  if (isError) {
+    return (
+      <Typography color="error">
+        Похоже вы ввели несуществующий артикул
+      </Typography>
     )
   }
 
@@ -40,6 +50,7 @@ const WidgetData: React.FC<WidgetDataProps> = ({
 export const Widget: React.FC = () => {
   const [feedbacks, setFeedbacks] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
   const [adminMode, setAdminMode] = useState(true)
 
   const removeFeedback = (id: number) => {
@@ -64,10 +75,15 @@ export const Widget: React.FC = () => {
             {!feedbacks ? 'Отзывы' : `Всего ${feedbacks.length} отзывов`}
           </Typography>
           {adminMode && (
-            <Menu setData={setFeedbacks} setIsLoading={setIsLoading} />
+            <Menu
+              setData={setFeedbacks}
+              setIsLoading={setIsLoading}
+              setIsError={setIsError}
+            />
           )}
         </Box>
         <WidgetData
+          isError={isError}
           isLoading={isLoading}
           feedbacks={feedbacks}
           removeFeedback={removeFeedback}

@@ -7,7 +7,7 @@ import { products } from '@/data'
 
 export const Catalog = forwardRef((props, ref) => {
   return (
-    <Container>
+    <Container {...props}>
       <Box ref={ref}>
         <Typography variant="h4" fontWeight={700} sx={{ mb: 1, mt: 3 }}>
           Каталог

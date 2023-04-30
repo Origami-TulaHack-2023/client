@@ -4,10 +4,11 @@ import { Box, Container, useTheme } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 export const MainLayout: React.FC = () => {
   const { palette } = useTheme()
+  const navigate = useNavigate()
   return (
     <Box bgcolor="primary.light">
       <Container
@@ -24,6 +25,7 @@ export const MainLayout: React.FC = () => {
               edge="start"
               color="inherit"
               aria-label="menu"
+              onClick={() => navigate('/')}
             >
               <HomeIcon fontSize="large" />
             </IconButton>

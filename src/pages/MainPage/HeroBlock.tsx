@@ -55,7 +55,7 @@ export const HeroBlock: React.FC<any> = ({ scroll }) => {
             height: '330px',
           }}
         />
-        <Box mb={-7}>
+        <Box mb={-7} mt={2}>
           <Logo />
         </Box>
         <Stack>
