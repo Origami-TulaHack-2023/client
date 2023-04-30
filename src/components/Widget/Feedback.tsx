@@ -1,20 +1,32 @@
 import * as React from 'react'
 
-import { useTheme, Box, Stack, Avatar, Rating, Divider } from '@mui/material'
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
+import {
+  useTheme,
+  Box,
+  Stack,
+  Avatar,
+  Rating,
+  Divider,
+  IconButton,
+} from '@mui/material'
 import Typography from '@mui/material/Typography'
 
 import { ReactComponent as LamodaLogo } from '@/assets/markets_logos/lamoda.svg'
 import { ReactComponent as OzonLogo } from '@/assets/markets_logos/ozon.svg'
 import { ReactComponent as SportmasterLogo } from '@/assets/markets_logos/sportmaster.svg'
 import { ReactComponent as WbLogo } from '@/assets/markets_logos/wb.svg'
+import { AdminModeContext } from '@/contexts'
 
 interface IFeedback {
+  id: number
   rating: number
   datetime: string
   name: string
   text: string
   market_place: string
   label: string
+  remove: any
 }
 
 const MAP_MARKET_PLACE_TO_LOGO: any = {
@@ -39,15 +51,18 @@ const MAP_LABEL_TO_TYPOGRAPHY: any = {
 }
 
 export const Feedback: React.FC<IFeedback> = ({
+  id,
   rating,
   datetime,
   name,
   text,
   market_place,
   label,
+  remove,
 }) => {
   const { palette } = useTheme()
   const Logo = MAP_MARKET_PLACE_TO_LOGO[market_place]
+  const adminMode = React.useContext(AdminModeContext)
   return (
     <Box key={name + datetime}>
       <Stack
@@ -71,11 +86,22 @@ export const Feedback: React.FC<IFeedback> = ({
         </Stack>
         <Stack alignItems="center">
           <Rating value={rating} readOnly />
-          {MAP_LABEL_TO_TYPOGRAPHY[label]}
+          {adminMode && MAP_LABEL_TO_TYPOGRAPHY[label]}
         </Stack>
         <Logo />
       </Stack>
-      <Typography>{text}</Typography>
+      <Box
+        display="flex"
+        alignItems="flex-start"
+        justifyContent="space-between"
+      >
+        <Typography>{text}</Typography>
+        {adminMode && (
+          <IconButton onClick={() => remove(id)}>
+            <DeleteOutlineOutlinedIcon />
+          </IconButton>
+        )}
+      </Box>
       <Divider
         sx={{
           my: 3,

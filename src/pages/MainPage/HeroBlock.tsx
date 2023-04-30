@@ -15,7 +15,7 @@ import { ReactComponent as MainSneakers } from '@/assets/hero/main.svg'
 import RightBottom from '@/assets/hero/right_bottom.png'
 import TopRigth from '@/assets/hero/right_top.png'
 
-export const HeroBlock: React.FC = () => {
+export const HeroBlock: React.FC<any> = ({ scroll }) => {
   const { palette } = useTheme()
   return (
     <Box
@@ -62,6 +62,7 @@ export const HeroBlock: React.FC = () => {
           <MainSneakers style={{ zIndex: 100 }} />
         </Stack>
         <ButtonBase
+          onClick={scroll}
           sx={{
             backgroundColor: 'common.white',
             borderRadius: 10,

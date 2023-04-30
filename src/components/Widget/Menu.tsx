@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 import SettingsIcon from '@mui/icons-material/Settings'
 import {
   DialogActions,
@@ -8,12 +9,12 @@ import {
   Typography,
   Button,
   Stack,
+  TextField,
 } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 
 import { clientEnv } from '@/clientEnv'
-import { CheckboxInputField } from '@/components/Widget/CheckboxInputField'
 import { DialogButton } from '@/components/Widget/DialogButton'
 
 export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
@@ -24,57 +25,31 @@ export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
 
   useEffect(() => {
     if (data && (data.data as any)?.length) {
-      setData(data.data)
+      setData(data.data.map((item: any, idx: any) => ({ ...item, id: idx })))
     }
   }, [setData, data])
 
   const [marketPlaces, setMarketPlaces] = useState<any>({
-    wildberries: {
-      vendorCode: '',
-      checked: false,
-    },
-    ozon: {
-      vendorCode: '',
-      checked: false,
-    },
-    sportmaster: {
-      vendorCode: '',
-      checked: false,
-    },
-    lamoda: {
-      vendorCode: '',
-      checked: false,
-    },
+    wildberries: '',
+    sportmater: '',
+    lamoda: '',
+    ozon: '',
   })
-  const { wildberries, ozon, sportmaster, lamoda } = marketPlaces
-
-  const handleCheckChange = (event: any) => {
-    setMarketPlaces({
-      ...marketPlaces,
-      [event.target.name]: {
-        ...marketPlaces[event.target.name],
-        checked: event.target.checked,
-      },
-    })
-  }
 
   const handleVendorCodeChange = (event: any) => {
     setMarketPlaces({
       ...marketPlaces,
-      [event.target.name]: {
-        ...marketPlaces[event.target.name],
-        vendorCode: event.target.value,
-      },
+      [event.target.name]: event.target.value,
     })
   }
 
   const handleSubmit = () => {
-    const checkedMarketPlaces = Object.keys(marketPlaces).filter(
-      k => marketPlaces[k].checked,
+    const filledPlaces = Object.keys(marketPlaces).filter(
+      k => marketPlaces[k].length > 0,
     )
-    const body = checkedMarketPlaces.map((checkedMarketPlace: any) => ({
-      market_place: checkedMarketPlace,
-      vendor_code: marketPlaces[checkedMarketPlace].vendorCode,
+    const body = filledPlaces.map((filledPlace: any) => ({
+      market_place: filledPlace,
+      vendor_code: marketPlaces[filledPlace],
     }))
     setIsLoading(true)
     mutateAsync(body).finally(() => setIsLoading(false))
@@ -85,41 +60,47 @@ export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
       <DialogButton
         renderButton={openDialog => (
           <IconButton onClick={openDialog}>
-            <SettingsIcon fontSize="large" />
+            <SearchOutlinedIcon fontSize="large" />
           </IconButton>
         )}
         renderContent={closeDialog => (
           <form>
-            <DialogContent>
-              <Typography variant="h5">Настройки</Typography>
+            <DialogContent sx={{ minWidth: 250 }}>
+              <Typography variant="h5" sx={{ mb: 1 }}>
+                Поиск
+              </Typography>
+              <Typography>
+                Для поиска отзывов введите артикул данного товара
+              </Typography>
               <Stack gap={2.5} mt={3}>
-                <CheckboxInputField
-                  checked={wildberries.checked}
-                  vendorCode={wildberries.vendorCode}
-                  handleCheckChange={handleCheckChange}
-                  handleValueChange={handleVendorCodeChange}
-                  marketPlace="wildberries"
+                <TextField
+                  label="Wildberries"
+                  required
+                  value={marketPlaces.wildberries}
+                  onChange={handleVendorCodeChange}
+                  name="wildberries"
                 />
-                <CheckboxInputField
-                  checked={sportmaster.checked}
-                  vendorCode={sportmaster.vendorCode}
-                  handleCheckChange={handleCheckChange}
-                  handleValueChange={handleVendorCodeChange}
-                  marketPlace="sportmaster"
+                <TextField
+                  label="Sportmaster"
+                  required
+                  value={marketPlaces.sportmaster}
+                  onChange={handleVendorCodeChange}
+                  name="sportmaster"
                 />
-                <CheckboxInputField
-                  checked={lamoda.checked}
-                  vendorCode={lamoda.vendorCode}
-                  handleCheckChange={handleCheckChange}
-                  handleValueChange={handleVendorCodeChange}
-                  marketPlace="lamoda"
+                <TextField
+                  label="Lamoda"
+                  required
+                  onChange={handleVendorCodeChange}
+                  value={marketPlaces.lamoda}
+                  name="lamoda"
                 />
-                <CheckboxInputField
-                  checked={ozon.checked}
-                  vendorCode={ozon.vendorCode}
-                  handleCheckChange={handleCheckChange}
-                  handleValueChange={handleVendorCodeChange}
-                  marketPlace="ozon"
+                <TextField
+                  label="Ozon"
+                  required
+                  onChange={handleVendorCodeChange}
+                  value={marketPlaces.ozon}
+                  name="ozon"
+                  helperText="В разработке"
                   disabled
                 />
               </Stack>
@@ -133,7 +114,7 @@ export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
                   closeDialog()
                 }}
               >
-                Загрузить
+                Искать
               </Button>
             </DialogActions>
           </form>

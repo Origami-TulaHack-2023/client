@@ -1,4 +1,4 @@
-import MenuIcon from '@mui/icons-material/Menu'
+import HomeIcon from '@mui/icons-material/Home'
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import { Box, Container, useTheme } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
@@ -25,7 +25,7 @@ export const MainLayout: React.FC = () => {
               color="inherit"
               aria-label="menu"
             >
-              <MenuIcon fontSize="large" />
+              <HomeIcon fontSize="large" />
             </IconButton>
             <IconButton
               size="large"

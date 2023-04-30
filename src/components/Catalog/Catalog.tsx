@@ -1,14 +1,18 @@
-import { Container, Typography } from '@mui/material'
+import { forwardRef } from 'react'
+
+import { Container, Typography, Box } from '@mui/material'
 
 import { ProductCard } from '@/components/Catalog/Card'
 import { products } from '@/data'
 
-export const Catalog: React.FC = () => {
+export const Catalog = forwardRef((props, ref) => {
   return (
     <Container>
-      <Typography variant="h4" fontWeight={700} sx={{ mb: 1, mt: 3 }}>
-        Каталог
-      </Typography>
+      <Box ref={ref}>
+        <Typography variant="h4" fontWeight={700} sx={{ mb: 1, mt: 3 }}>
+          Каталог
+        </Typography>
+      </Box>
       {products.map(({ vendor_code, label, price, descr, rate, image }) => (
         <ProductCard
           label={label}
@@ -22,4 +26,5 @@ export const Catalog: React.FC = () => {
       ))}
     </Container>
   )
-}
+})
+Catalog.displayName = 'catalog'

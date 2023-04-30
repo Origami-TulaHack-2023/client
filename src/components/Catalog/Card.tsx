@@ -56,7 +56,7 @@ export const ProductCard: React.FC<IProps> = ({
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5" fontWeight={700}>
-            {price} P
+            {price} ₽
           </Typography>
           <Typography variant="body1" color="text.secondary" fontWeight={700}>
             {label}

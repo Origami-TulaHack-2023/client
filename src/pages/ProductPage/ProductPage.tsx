@@ -39,7 +39,7 @@ export const ProductPage: React.FC = () => {
           {product.label}
         </Typography>
         <Typography variant="h4" fontWeight={700} sx={{ mb: 2 }}>
-          {product.price} Р
+          {product.price} ₽
         </Typography>
         <Typography fontWeight={700}>Описание:</Typography>
         <Typography>{product.description}</Typography>
