@@ -6,6 +6,7 @@ interface Props {
   marketPlace: string
   handleValueChange: (e: any) => void
   handleCheckChange: (e: any) => void
+  disabled?: boolean
 }
 
 export const CheckboxInputField: React.FC<Props> = ({
@@ -14,6 +15,7 @@ export const CheckboxInputField: React.FC<Props> = ({
   handleValueChange,
   handleCheckChange,
   marketPlace,
+  disabled = false,
 }) => {
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -23,6 +25,7 @@ export const CheckboxInputField: React.FC<Props> = ({
             checked={checked}
             onChange={handleCheckChange}
             name={marketPlace}
+            disabled={disabled}
           />
         }
         label={marketPlace}
@@ -33,6 +36,8 @@ export const CheckboxInputField: React.FC<Props> = ({
         value={vendorCode}
         onChange={handleValueChange}
         name={marketPlace}
+        disabled={disabled}
+        size="small"
       />
     </Stack>
   )

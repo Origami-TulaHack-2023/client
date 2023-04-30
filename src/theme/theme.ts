@@ -15,6 +15,12 @@ export const theme = createTheme({
       primary: '#2C244E',
       secondary: '#363F57',
     },
+    success: {
+      main: '#52ABB4',
+    },
+    error: {
+      main: '#EF8D91',
+    },
   },
   components: {
     MuiCssBaseline: {

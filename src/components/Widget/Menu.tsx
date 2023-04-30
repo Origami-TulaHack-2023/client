@@ -41,8 +41,12 @@ export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
       vendorCode: '',
       checked: false,
     },
+    lamoda: {
+      vendorCode: '',
+      checked: false,
+    },
   })
-  const { wildberries, ozon, sportmaster } = marketPlaces
+  const { wildberries, ozon, sportmaster, lamoda } = marketPlaces
 
   const handleCheckChange = (event: any) => {
     setMarketPlaces({
@@ -88,7 +92,7 @@ export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
           <form>
             <DialogContent>
               <Typography variant="h5">Настройки</Typography>
-              <Stack gap={2} mt={3}>
+              <Stack gap={2.5} mt={3}>
                 <CheckboxInputField
                   checked={wildberries.checked}
                   vendorCode={wildberries.vendorCode}
@@ -97,18 +101,26 @@ export const Menu: React.FC<any> = ({ setData, setIsLoading }) => {
                   marketPlace="wildberries"
                 />
                 <CheckboxInputField
-                  checked={ozon.checked}
-                  vendorCode={ozon.vendorCode}
-                  handleCheckChange={handleCheckChange}
-                  handleValueChange={handleVendorCodeChange}
-                  marketPlace="ozon"
-                />
-                <CheckboxInputField
                   checked={sportmaster.checked}
                   vendorCode={sportmaster.vendorCode}
                   handleCheckChange={handleCheckChange}
                   handleValueChange={handleVendorCodeChange}
                   marketPlace="sportmaster"
+                />
+                <CheckboxInputField
+                  checked={lamoda.checked}
+                  vendorCode={lamoda.vendorCode}
+                  handleCheckChange={handleCheckChange}
+                  handleValueChange={handleVendorCodeChange}
+                  marketPlace="lamoda"
+                />
+                <CheckboxInputField
+                  checked={ozon.checked}
+                  vendorCode={ozon.vendorCode}
+                  handleCheckChange={handleCheckChange}
+                  handleValueChange={handleVendorCodeChange}
+                  marketPlace="ozon"
+                  disabled
                 />
               </Stack>
             </DialogContent>
